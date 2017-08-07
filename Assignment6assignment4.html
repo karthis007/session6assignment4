@@ -1,0 +1,90 @@
+<!DOCTYPE>
+<html>
+<head>
+  <script>
+  function addRow(tableID) {
+
+        var table = document.getElementById(tableID);
+
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+
+        var colCount = table.rows[0].cells.length;
+
+        for(var i=0; i<colCount; i++) {
+
+            var newcell = row.insertCell(i);
+
+            newcell.innerHTML = table.rows[1].cells[i].innerHTML;
+            //alert(newcell.childNodes);
+            switch(newcell.childNodes[0].type) {
+                case "text":
+                        newcell.childNodes[0].value = "";
+                        break;
+                case "checkbox":
+                        newcell.childNodes[0].checked = false;
+                        break;
+            }
+        }
+    }
+
+    function deleteRow(tableID) {
+        try {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+
+        for(var i=0; i<rowCount; i++) {
+            var row = table.rows[i];
+            var chkbox = row.cells[0].childNodes[0];
+            if(null != chkbox && true == chkbox.checked) {
+                if(rowCount <= 2) {
+                    alert("Cannot delete all the rows.");
+                    break;
+                }
+                table.deleteRow(i);
+                rowCount--;
+                i--;
+            }
+        }
+        }catch(e) {
+            alert(e);
+        }
+    }
+
+function gatherData(){
+
+
+ //Tests
+        var table = document.getElementById('dataTable');
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+        var colCount = table.rows[0].cells.length;
+
+        alert(rowCount);
+        alert(row);
+        alert(colCount);
+}
+  </script>
+</head>
+<body>
+      <form>
+         <div id="Input">
+                        <INPUT class="form-button" id="AddRow" type="button" value="Add Row" onclick="addRow('dataTable')" />
+                        <INPUT class="form-button" id="DeleteRow" type="button" value="Delete Row(s)" onclick="deleteRow('dataTable')" />
+                        <INPUT class="form-button" id="Finished" type="button" value="Finished" onclick="gatherData('dataTable')" />
+                    <table id="dataTable" border="1" style="width:200px" id="mytable" align="center" cellspacing="3" cellpadding="4">
+                        <th>Select</th>
+                        <th>Text1</th>
+                        <th>Text2</th>
+                        <th>Text3</th>
+                            <tr>
+                            <td><INPUT type="checkbox" name="chk"/></td>
+                            <td><INPUT type="text" name="text1"/></td>
+                            <td><INPUT type="text" name="txt2"/></td>
+                            <td><INPUT type="text" name="txt3"/></td>
+                            </tr>
+                    </table>
+            </div>
+       </form>
+</body>
+</html>
